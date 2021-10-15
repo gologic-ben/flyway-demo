@@ -1,12 +1,12 @@
-= lunch & learn flyway
+# lunch & learn flyway
 
-== DORA: database change management
+## DORA: database change management
 * Establish effective communication of database changes
 * Treat all database schema changes as migrations
 * Zero-downtime database changes
 Link: https://cloud.google.com/architecture/devops/devops-tech-database-change-management
 
-== Lots of tooooools
+## Lots of tooooools
 * migrate (Go)
 * alembic (Python)
 * Active Record Migrations (Ruby on Rails)
@@ -16,14 +16,14 @@ Link: https://cloud.google.com/architecture/devops/devops-tech-database-change-m
 * Flyway (platform-independent)
 * Liquibase (platform-independent)
 
-== UseCase: multiple dev, multiple env, shift-left dba
+## UseCase: multiple dev, multiple env, shift-left dba
 * Integrated into Spring-Boot
 * Database migration in GIT
 * Explicit script migration
 
-== Demo: setup, app start
+## Demo: setup, app start
 
-=== Dependencies
+### Dependencies
 
 ```
 <dependency>
@@ -32,18 +32,15 @@ Link: https://cloud.google.com/architecture/devops/devops-tech-database-change-m
 </dependency>
 ```    
 
-=== Create data table
+### Create data table
 
-```
-V00001__Create_user_table.sql
-CREATE TABLE IF NOT EXISTS `users` (`id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,`name` varchar(20))ENGINE=InnoDB DEFAULT CHARSET=UTF8;
-```
+see `flyway-app\src\main\resources\db\migration\V00001__Create_user_table.sql`
 
-=== Add java code 
+### Add java code 
 
 User, UserRepository, UserController, Exception
 
-=== Start both database and application
+### Start both database and application
 
 ```
 docker compose up --build --detach
@@ -54,7 +51,7 @@ docker compose up --build --detach
 
 See `docker-compose.yml` file at the root level to explore containers definitions
 
-== How it works: logs, migration files and tables
+## How it works: logs, migration files and tables
 
 * Migration
 ** It checks a database schema to locate its metadata table (SCHEMA_VERSION by default). If the metadata table doesn't exist, it will create one.
@@ -89,21 +86,16 @@ Example: V1_1_0__my_first_migration.sql
 
 * Tables
 
-See `show-tables.txt`
-
-```
-flyway_schema_history
-```
-
-See `flyway-table.txt`
+** Migations scripts are stored in `flyway_schema_history` table, see `docs\show-tables.txt`
+** Table `flyway_schema_history` keep execution date, description, success, see  `docs\flyway-table.txt`
 
 ```
 V00001__Create_user_table.sql executed !
 ```
 
-== UseCases
+## UseCases
 
-=== database initialization
+### database initialization
 
 Let's populate first data via Flyway !
 
@@ -121,7 +113,7 @@ docker compose up --build --detach app
 Check database content, table `users` content and table `flyway_schema_history` content !
 If you restart app, flyway will not re-insert users, cool isn't it !
 
-=== db migration (Add new column schema)
+### db migration (Add new column schema)
 
 Add a new script in migration folder to add new fields
 
@@ -130,7 +122,7 @@ V00003__Alter_user_add_firstname.sql
 
 /* Add new columns and update column with content */
 ALTER TABLE users ADD country varchar(50), ADD age int not null;
-UPDATE users SET age=0;
+UPDATE users SET age#0;
 ```
 
 Update user class with new fields: User.java
@@ -148,7 +140,7 @@ docker compose up --build --detach app
 
 Check database content, table `users` has new columns and `age` is updated to 0 for all users.
 
-=== restart from scratch, no ?
+### restart from scratch, no ?
 
 Ok, let's simulate that host is a new environment, remove containers and database volumes. 
 
@@ -165,7 +157,7 @@ docker compose up
 
 Wunderbar, tables and contents is setup and everything has been reset !
 
-== FAQ
+## FAQ
 * Why not simply use spring jpa "auto-update" ?
 * SQL script migration only ?
 * If migration failed ?
