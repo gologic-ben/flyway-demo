@@ -1,0 +1,10 @@
+Execute:
+> show tables
+
++ ------------------------ +
+| Tables_in_flyway_db      |
++ ------------------------ +
+| flyway_schema_history    |
+| users                    |
++ ------------------------ +
+2 rows

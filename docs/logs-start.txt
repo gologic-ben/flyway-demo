@@ -1,0 +1,40 @@
+ ____            ___
+/\  _`\         /\_ \                   __
+\ \ \L\_\    ___\//\ \     ___      __ /\_\    ___
+ \ \ \L_L   / __`\\ \ \   / __`\  /'_ `\/\ \  /'___\
+  \ \ \/, \/\ \L\ \\_\ \_/\ \L\ \/\ \L\ \ \ \/\ \__/
+   \ \____/\ \____//\____\ \____/\ \____ \ \_\ \____\
+    \/___/  \/___/ \/____/\/___/  \/___L\ \/_/\/____/
+                                    /\____/
+                                    \_/__/
+
+INFO 58 --- [           main] c.g.f.flywaydemo.FlywayDemoApplication   : Starting FlywayDemoApplication using Java 11.0.12 on 18e71cc638af with PID 58 (/flyway-app/target/classes started by root in /flyway-app)
+INFO 58 --- [           main] c.g.f.flywaydemo.FlywayDemoApplication   : No active profile set, falling back to default profiles: default
+INFO 58 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+INFO 58 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 47 ms. Found 1 JPA repository interfaces.
+INFO 58 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+INFO 58 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+INFO 58 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.53]
+INFO 58 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+INFO 58 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2049 ms
+INFO 58 --- [           main] o.f.c.internal.license.VersionPrinter    : Flyway Community Edition 7.7.3 by Redgate
+INFO 58 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+INFO 58 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+INFO 58 --- [           main] o.f.c.i.database.base.DatabaseType       : Database: jdbc:mysql://mysqldb:3306/flyway_db (MySQL 8.0)
+INFO 58 --- [           main] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.026s)
+INFO 58 --- [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `flyway_db`: << Empty Schema >>
+INFO 58 --- [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `flyway_db` to version "00001 - Create user table"
+WARN 58 --- [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : DB: 'utf8' is currently an alias for the character set UTF8MB3, but will be an alias for UTF8MB4 in a future release. Please consider using UTF8MB4 in order to be unambiguous. (SQL State: HY000 - Error Code: 3719)
+INFO 58 --- [           main] o.f.c.i.s.DefaultSqlScriptExecutor       : 0 rows affected
+INFO 58 --- [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema `flyway_db`, now at version v00001 (execution time 00:00.138s)
+INFO 58 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+INFO 58 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.32.Final
+INFO 58 --- [           main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+INFO 58 --- [           main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+INFO 58 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+INFO 58 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+WARN 58 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+INFO 58 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+INFO 58 --- [           main] c.g.f.flywaydemo.FlywayDemoApplication   : Started FlywayDemoApplication in 8.834 seconds (JVM running for 9.835)
+INFO 58 --- [           main] c.g.flyway.flywaydemo.LoadDatabase       : Preloading User{id=1, name=Bilbo Baggins}
+INFO 58 --- [           main] c.g.flyway.flywaydemo.LoadDatabase       : Preloading User{id=2, name=Frodo Baggins}
