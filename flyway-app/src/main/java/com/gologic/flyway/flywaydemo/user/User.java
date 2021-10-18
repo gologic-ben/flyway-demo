@@ -14,7 +14,5 @@ import lombok.Data;
 public class User {
   private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Long id;
   private String name;
-  private String country;
-  private Long age;
 
 }
