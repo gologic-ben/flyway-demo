@@ -58,15 +58,17 @@ See `docker-compose.yml` file at the root level to explore containers definition
 
 ## How it works: logs, migration files and tables
 
-* Migration
-** It checks a database schema to locate its metadata table (SCHEMA_VERSION by default). If the metadata table doesn't exist, it will create one.
-** It scans an application classpath for available migrations.
-** It compares migrations against the metadata table. If a version number is lower or equal to a version marked as current, it's ignored.
-** It marks any remaining migrations as pending migrations. These are sorted based on the version number and are executed in order.
-** As each migration is applied, the metadata table is updated accordingly.
-* Logs
+### Migration
 
-See `logs-start.txt`
+* It checks a database schema to locate its metadata table (SCHEMA_VERSION by default). If the metadata table doesn't exist, it will create one.
+* It scans an application classpath for available migrations.
+* It compares migrations against the metadata table. If a version number is lower or equal to a version marked as current, it's ignored.
+* It marks any remaining migrations as pending migrations. These are sorted based on the version number and are executed in order.
+* As each migration is applied, the metadata table is updated accordingly.
+
+### Logs
+
+Check in logs, to find flyway migrating scripts in database, to See `docs\logs-start.txt`
 
 ```   
 o.f.c.internal.license.VersionPrinter    : Flyway Community Edition 7.7.3 by Redgate
@@ -79,7 +81,7 @@ o.f.c.i.s.DefaultSqlScriptExecutor       : 0 rows affected
 o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema `flyway_db`, now at version v00001 (execution time 00:00.138s)
 ```
 
-* Migration file format
+### Migration file format
 
 Flyway adheres to the following naming convention for migration scripts: *<Prefix><Version>__<Description>.sql*
 
@@ -89,10 +91,10 @@ Where:
 <Description> – Textual description of the migration. A double underscore separates the description from the version numbers.
 Example: V1_1_0__my_first_migration.sql
 
-* Tables
-** Migations scripts are stored in `flyway_schema_history` table, see `docs\show-tables.txt`
-** Table `flyway_schema_history` keep execution date, description, success, see  `docs\flyway-table.txt`
+### Flyway migration table
 
+* Migations scripts are stored in `flyway_schema_history` table, see `docs\show-tables.txt`
+* Table `flyway_schema_history` keep execution date, description, success, see  `docs\flyway-table.txt`
 
 ## UseCases
 
@@ -100,8 +102,9 @@ Example: V1_1_0__my_first_migration.sql
 
 Let's populate first data via Flyway !
 
+see `flyway-app\src\main\resources\db\migration\V00002__Insert_users.sql`
+
 ```
-V00002__Insert_users.sql
 INSERT INTO users (name) VALUES ('Bilbo Baggins'),('Frodo Baggins');
 ```
 
@@ -111,19 +114,19 @@ Then reload application container only
 docker compose up --build --detach app
 ```
 
-Check database content, table `users` content and table `flyway_schema_history` content !
-If you restart app, flyway will not re-insert users, cool isn't it !
+Check database content, table `users` content and table `flyway_schema_history` content, if you restart app flyway will not re-insert users, easy data insertion.
 
 ### db migration (Add new column schema)
 
 Add a new script in migration folder to add new fields
 
-```
-V00003__Alter_user_add_firstname.sql
+see `flyway-app\src\main\resources\db\migration\V00003__Alter_user_add_firstname.sql`
 
+```
 /* Add new columns and update column with content */
 ALTER TABLE users ADD country varchar(50), ADD age int not null;
-UPDATE users SET age#0;
+ 
+UPDATE users SET age=5;
 ```
 
 Update user class with new fields: User.java
@@ -139,9 +142,9 @@ Then reload application container only
 docker compose up --build --detach app
 ```
 
-Check database content, table `users` has new columns and `age` is updated to 0 for all users.
+Check database content, table `users` has new columns and `age` is updated to 5 for all users.
 
-### restart from scratch, no ?
+### Restart from scratch, no ?
 
 Ok, let's simulate that host is a new environment, remove containers and database volumes. 
 
