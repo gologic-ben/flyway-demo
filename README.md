@@ -1,10 +1,12 @@
-# lunch & learn flyway
+# Demo Flyway
 
 ## DORA: database change management
+
+https://cloud.google.com/architecture/devops/devops-tech-database-change-management
+
 * Establish effective communication of database changes
 * Treat all database schema changes as migrations
 * Zero-downtime database changes
-Link: https://cloud.google.com/architecture/devops/devops-tech-database-change-management
 
 ## Lots of tooooools
 * migrate (Go)
@@ -38,7 +40,10 @@ see `flyway-app\src\main\resources\db\migration\V00001__Create_user_table.sql`
 
 ### Add java code 
 
-User, UserRepository, UserController, Exception
+* Entity: User
+* JPA: UserRepository 
+* API: UserController
+* Error handling: UserNotFoundException
 
 ### Start both database and application
 
@@ -63,7 +68,7 @@ See `docker-compose.yml` file at the root level to explore containers definition
 
 See `logs-start.txt`
 
-```
+```   
 o.f.c.internal.license.VersionPrinter    : Flyway Community Edition 7.7.3 by Redgate
 o.f.c.i.database.base.DatabaseType       : Database: jdbc:mysql://mysqldb:3306/flyway_db (MySQL 8.0)
 o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.026s)
@@ -85,13 +90,9 @@ Where:
 Example: V1_1_0__my_first_migration.sql
 
 * Tables
-
 ** Migations scripts are stored in `flyway_schema_history` table, see `docs\show-tables.txt`
 ** Table `flyway_schema_history` keep execution date, description, success, see  `docs\flyway-table.txt`
 
-```
-V00001__Create_user_table.sql executed !
-```
 
 ## UseCases
 
